@@ -1,5 +1,5 @@
 <div align="left">
-  <a href="https://diffsharp.github.io"> <img height="80px" src="docs/img/Furnace-logo-text.png"></a>
+  <a href="https://fsprojects.github.io/Furnace"> <img height="80px" src="docs/img/Furnace-logo-text.png"></a>
 </div>
 
 -----------------------------------------
