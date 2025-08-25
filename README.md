@@ -37,7 +37,7 @@ We welcome all contributions.
 
 ## Background
 
-Furnace is a hard fork of DiffSharp. 
+Furnace is a hard fork of [DiffSharp](https://github.com/DiffSharp/DiffSharp). 
 
 The original DiffSharp library was developed by [Atılım Güneş Baydin](http://www.robots.ox.ac.uk/~gunes/), [Don Syme](https://www.microsoft.com/en-us/research/people/dsyme/) and other contributors, having started as a project supervised by the automatic differentiation wizards [Barak Pearlmutter](https://scholar.google.com/citations?user=AxFrw0sAAAAJ&hl=en) and [Jeffrey Siskind](https://scholar.google.com/citations?user=CgSBtPYAAAAJ&hl=en).
 
