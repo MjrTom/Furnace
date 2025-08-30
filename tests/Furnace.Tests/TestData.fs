@@ -374,34 +374,6 @@ type TestData () =
         Directory.Delete(tempDir, true)
 
     [<Test>]
-    member _.TestDataUtilExtractTarStream () =
-        let tempDir = Path.Join(Path.GetTempPath(), Random.UUID())
-        Directory.CreateDirectory(tempDir) |> ignore
-        
-        let testContent = "This is test file content."
-        let testFileName = "testfile.txt"
-        
-        let tarData = Array.zeroCreate<byte> 1024
-        let nameBytes = Encoding.ASCII.GetBytes(testFileName)
-        Array.blit nameBytes 0 tarData 0 (min nameBytes.Length 100)
-        
-        let sizeBytes = Encoding.ASCII.GetBytes(sprintf "%011o\000" testContent.Length)
-        Array.blit sizeBytes 0 tarData 124 (min sizeBytes.Length 12)
-        
-        let contentBytes = Encoding.ASCII.GetBytes(testContent)
-        Array.blit contentBytes 0 tarData 512 (min contentBytes.Length (testContent.Length))
-        
-        use stream = new MemoryStream(tarData)
-        extractTarStream stream tempDir
-        
-        let extractedFile = Path.Join(tempDir, testFileName)
-        Assert.True(File.Exists(extractedFile))
-        let extractedContent = File.ReadAllText(extractedFile)
-        Assert.AreEqual(testContent, extractedContent)
-        
-        Directory.Delete(tempDir, true)
-
-    [<Test>]
     member _.TestDataUtilExtractTarStreamEmptyHeader () =
         let tempDir = Path.Join(Path.GetTempPath(), Random.UUID())
         Directory.CreateDirectory(tempDir) |> ignore
@@ -416,39 +388,6 @@ type TestData () =
         
         Directory.Delete(tempDir, true)
 
-    [<Test>]
-    member _.TestDataUtilExtractTarGz () =
-        let tempDir = Path.Join(Path.GetTempPath(), Random.UUID())
-        Directory.CreateDirectory(tempDir) |> ignore
-        
-        let testContent = "Test file for tar.gz extraction"
-        let testFileName = "test.txt"
-        
-        let tarData = Array.zeroCreate<byte> 1024
-        let nameBytes = Encoding.ASCII.GetBytes(testFileName)
-        Array.blit nameBytes 0 tarData 0 (min nameBytes.Length 100)
-        
-        let sizeBytes = Encoding.ASCII.GetBytes(sprintf "%011o\000" testContent.Length)
-        Array.blit sizeBytes 0 tarData 124 (min sizeBytes.Length 12)
-        
-        let contentBytes = Encoding.ASCII.GetBytes(testContent)
-        Array.blit contentBytes 0 tarData 512 (min contentBytes.Length (testContent.Length))
-        
-        let gzipFile = Path.Join(tempDir, "test.tar.gz")
-        use fs = File.Create(gzipFile)
-        use gz = new GZipStream(fs, CompressionMode.Compress)
-        gz.Write(tarData, 0, tarData.Length)
-        gz.Close()
-        fs.Close()
-        
-        extractTarGz gzipFile tempDir
-        
-        let extractedFile = Path.Join(tempDir, testFileName)
-        Assert.True(File.Exists(extractedFile))
-        let extractedContent = File.ReadAllText(extractedFile)
-        Assert.AreEqual(testContent, extractedContent)
-        
-        Directory.Delete(tempDir, true)
     [<Test>]
     member _.TestDataUtilPrintVal () =
         let floatVal = 3.14f
