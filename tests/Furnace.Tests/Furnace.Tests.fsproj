@@ -33,6 +33,7 @@
     <Compile Include="TestRandom.fs" />
     <Compile Include="TestDistributions.fs" />
     <Compile Include="TestExtensions.fs" />
+    <Compile Include="TestTorchExtensions.fs" />
     <Compile Include="TestData.fs" />
     <Compile Include="TestModel.fs" />
     <Compile Include="TestModel.BatchNorm.fs" />
