@@ -41,7 +41,6 @@ module DataUtil =
                 stream.Seek(24L, SeekOrigin.Current) |> ignore // Seek to 'char size[12]'
                 stream.Read(buffer, 0, 12) |> ignore // Read 'char size[12]'
                 let size = Convert.ToInt32(Encoding.ASCII.GetString(buffer, 0, 12).Trim(Convert.ToChar(0)).Trim(), 8)
-                printfn "Extracting %A (%A Bytes)" name size
                 stream.Seek(376L, SeekOrigin.Current) |> ignore // Seek to end of header block, beginning of file data
                 let output = Path.Combine(outputDir, name)
                 if not (Directory.Exists(Path.GetDirectoryName(output))) then
