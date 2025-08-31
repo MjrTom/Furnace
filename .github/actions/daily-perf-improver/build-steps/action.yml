@@ -1,0 +1,41 @@
+name: 'Daily Performance Improver Build Steps'
+description: 'Sets up environment for performance improvement work in Furnace'
+author: 'Daily Perf Improver'
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Setup .NET 6.0
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 6.0.x
+    
+    - name: Install dependencies
+      shell: bash
+      run: dotnet restore
+      
+    - name: Install tool dependencies
+      shell: bash
+      run: dotnet tool restore
+      
+    - name: Build project in Debug configuration
+      shell: bash
+      run: dotnet build --configuration Debug --no-restore --verbosity normal
+      
+    - name: Build project in Release configuration
+      shell: bash
+      run: dotnet build --configuration Release --no-restore --verbosity normal
+      
+    - name: Install ReportGenerator for coverage analysis
+      shell: bash
+      run: dotnet tool install -g dotnet-reportgenerator-globaltool --version 5.1.26
+      
+    - name: Verify benchmark projects build
+      shell: bash
+      run: |
+        dotnet build tests/Furnace.Benchmarks/Furnace.Benchmarks.fsproj --configuration Release --no-restore
+        dotnet build tests/Furnace.Benchmarks.Python/Furnace.Benchmarks.Python.fsproj --configuration Release --no-restore
+        
+    - name: Run basic tests to ensure correctness
+      shell: bash
+      run: dotnet test --configuration Release --no-build --verbosity normal
