@@ -11,7 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="SkiaSharp" Version="3.119.0" />
+    <PackageReference Include="SkiaSharp" Version="3.119.1" />
     <ProjectReference Include="..\Furnace.Core\Furnace.Core.fsproj" />
     <PackageReference Include="TorchSharp" Version="$(TorchSharpVersion)" />
 	  <PackageReference Update="FSharp.Core" Version="$(FSharpCoreVersion)" />
